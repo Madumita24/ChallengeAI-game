@@ -23,8 +23,22 @@ export default function ElectedPage({ name }) {
     console.log('Navigating to phase-one...');
     navigate('/phase-one');
   };
-  
-  
+
+  // ⌨️ Enter key navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Enter') {
+        if (accepted) {
+          handleContinue();
+        } else {
+          alert('Please accept the terms and conditions before continuing.');
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [accepted]);
 
   return (
     <div className="elected-container">
@@ -57,9 +71,8 @@ export default function ElectedPage({ name }) {
 
       {/* Floating Bean Character + Speech Bubble */}
       <div className="floating-bean">
-         <div className="speech-bubble">Hmm... let’s see what I’ve signed up for!</div>
+        <div className="speech-bubble">Let's see what I sign up for?</div>
         <img src={beanReader} alt="Reading Bean" className="bean-reader" />
-        
       </div>
     </div>
   );

@@ -105,15 +105,16 @@
 
 /* 🫘 Floating Bean + Speech Bubble (Right Aligned) */
 .floating-bean {
-    position: absolute;
-    right: 0;
-    top: 310px;
-    transform: translateX(-126%);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;  /* <-- move bubble closer to the bean */
-    z-index: 10;
-  }
+  position: absolute;
+  right: 0;
+  top: 310px;
+  transform: translateX(-40%);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  z-index: 10;
+}
+
   
 
 .bean-reader {
@@ -127,9 +128,9 @@
     margin-right: 2px;
     background-color: #fff;
     color: #000;
-    padding: 16px 24px;       /* 👈 more padding inside the bubble */
+    padding: 16px 20px;       /* 👈 more padding inside the bubble */
     border-radius: 25px;      /* 👈 rounder edges */
-    max-width: 250px;      /* 👈 wider bubble */
+    max-width: 400px;      /* 👈 wider bubble */
     font-size: 1.1rem;        /* 👈 slightly larger text */
     font-weight: bold;
     position: relative;
