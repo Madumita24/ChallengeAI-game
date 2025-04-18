@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import WelcomePage from './components/WelcomePage';
 import ElectedPage from './components/ElectedPage';
 import PhaseOne from './pages/PhaseOne';
+import PhaseTwo from './pages/PhaseTwo';
 
 
 function AppRoutes() {
@@ -12,6 +13,8 @@ function AppRoutes() {
       <Route path="/" element={<WelcomePage />} />
       <Route path="/elected" element={<ElectedPage name={location.state?.name || 'Citizen'} />} />
       <Route path="/phase-one" element={<PhaseOne />} />
+      <Route path="/phase-two" element={<PhaseTwo />} />
+
     </Routes>
   );
 }

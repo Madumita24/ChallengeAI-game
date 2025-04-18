@@ -1,358 +1,357 @@
 .phase-one-container {
-    background-color: #2fa7e0;
-    background-image: url('C:\Users\Madum\challengeAI\republic-of-bean\src\assets\clouds.gif'); /* ✅ Use relative public path */
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    min-height: 100vh;
-    font-family: 'Fredoka One', cursive;
-    padding: 40px 20px;
-    position: relative;
-    box-sizing: border-box;
-  }
+  background-color: #2fa7e0;
+  background-image: url('clouds.gif'); /* ✅ Use relative public path */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+  font-family: 'Fredoka One', cursive;
+  padding: 40px 20px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.top-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.title-box,
+.phase-box,
+.budget-box {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #5c4033;
+  color: white;
+  padding: 20px 25px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 18px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.budget-box span {
+  color: yellow;
+}
+
+.phase-box {
+  display: inline-block;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));  /* ⬅ increased min */
+  gap: 25px; /* more spacing between cards */
+  max-width: 980px; /* ⬅ slightly wider container */
+  justify-content: center; /* ✅ Centers the last item */
   
-  .top-bar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    position: relative;
-  }
-  
-  .title-box,
-  .phase-box,
-  .budget-box {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: #5c4033;
-    color: white;
-    padding: 20px 25px;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 18px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-  }
-  
-  .budget-box span {
-    color: yellow;
-  }
-  
-  .phase-box {
-    display: inline-block;
-    margin: 0 auto;
-    margin-bottom: 20px;
-  }
-  
-  .category-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(220px, 1fr));  /* ⬅️ increased min */
-    gap: 25px; /* more spacing between cards */
-    max-width: 980px; /* ⬅️ slightly wider container */
-    justify-content: center; /* ✅ Centers the last item */
-    
-    margin: 0 auto;
-    position: relative;
+  margin: 0 auto;
+  position: relative;
 z-index: 10;
 
-  }
-  
-  .centered-row-1 {
-    grid-column: 2;
-  }
-  
-  .centered-row-2 {
-    grid-column: 3;
-  }
-  
-  .centered-row-3 {
-    grid-column: 4;
-  }
-  
-  .category-card {
-    padding: 20px;
-    border-radius: 16px;
-    font-size: 25px;
-    font-weight: bold;
-    text-align: center;
-    color: #fff;
-    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    text-shadow: 1px 1px 1px #00000050;
-
-    /* ADD THESE 👇 */
-  word-wrap: break-word;
-  hyphens: auto;
-  white-space: normal;
-  }
-  
-  .category-card:hover {
-    transform: scale(1.05);
-    box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.4);
-  }
-  
-  
-  /* Button colors */
-  .color-0 {
-    background-color: #f39c12;
-  }
-  .color-1 {
-    background-color: #e74c3c;
-  }
-  .color-2 {
-    background-color: #27ae60;
-  }
-  .color-3 {
-    background-color: #1abc9c;
-  }
-  .color-4 {
-    background-color: #3498db;
-  }
-  .color-5 {
-    background-color: #9b59b6;
-  }
-  .color-6 {
-    background-color: #ff6f91; /* 💡 You can change the color to whatever you like */
-  }
-  
-  
-  .bean-wrapper {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    z-index: 5; /* ✅ push it below the modal and feedback/button layer */
-  pointer-events: none; /* ✅ let clicks pass through */
-  }
-  
-  .bean-mascot {
-    width: 600px;
-    animation: wave 2s infinite ease-in-out;
-    pointer-events: none; /* prevent blocking */
-
-  }
-  @keyframes wave {
-  0%, 100% { transform: rotate(0deg); }
-  50% { transform: rotate(1.5deg); }
 }
-  .bean-wrapper .speech-bubble {
-    position: absolute;
-    bottom: 460px;    /* ⬆️ Move it much higher above the bean */
-    right: 360px;     /* ⬅️ Adjust to the left of the bean's head */
-    background-color: #fff7d6;
-    color: #222;
-    padding: 12px 20px;
-    border-radius: 18px;
-    font-size: 22px;
-    font-weight: bold;
-    max-width: 240px;
-    text-align: center;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 10; /* make sure it's above background */
-    pointer-events: none;
 
-    word-wrap: break-word;
-  white-space: normal;
-  overflow-wrap: break-word;
-  }
-  
-  
-  .bean-wrapper .speech-bubble::after {
-    content: '';
-    position: absolute;
-    bottom: -20px;
-    left: 80%;  /* adjusts arrow's horizontal position */
-    transform: translateX(-50%);
-    border-width: 10px;
-    border-style: solid;
-    border-color: #fff7d6 transparent transparent transparent;
-  }
-  @keyframes swingForwardBackward {
-    0%   { transform: perspective(800px) rotateX(0deg); }
-    25%  { transform: perspective(800px) rotateX(6deg); }
-    50%  { transform: perspective(800px) rotateX(-6deg); }
-    75%  { transform: perspective(800px) rotateX(4deg); }
-    100% { transform: perspective(800px) rotateX(0deg); }
-  }
-  
-  
-  .wooden-signs-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-    animation: swingForwardBackward 3.5s ease-in-out infinite;
-  transform-origin: top center;
-  transform-style: preserve-3d;
-  }
-  
-  .wooden-signs {
-    width: 500px;
-    max-width: 90vw;
-    height: auto;
-    transform-origin: top center; /* ✅ makes the sign swing from the top */
-  }
-  
-  .modal-overlay {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-    backdrop-filter: blur(4px);
-  }
-  
-  .modal-box {
-    background: #fff7ef;
-    border-radius: 20px;
-    padding: 25px 30px;
-    max-width: 600px;
-    width: 90%;
-    text-align: left;
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
-    animation: fadeIn 0.3s ease-in-out;
-    font-family: 'Fredoka One', cursive;
-    border: 4px solid #5c4033;
-  }
-  
-  .modal-box h2 {
-    margin-top: 0;
-    font-size: 28px;
-    text-align: center;
-    color: #222;
-  }
-  
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  
-  .option-box {
-    background-color: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 16px;
-    border: 3px solid #d6a168;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .option-box h4 {
-    margin-top: 0;
-    font-size: 20px;
-    color: #333;
-  }
-  
-  .option-box p {
-    margin: 6px 0;
-    font-size: 16px;
-    color: #444;
-  }
-  
-  .option-box button {
-    background-color: #2d9cdb;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .option-box button:hover {
-    background-color: #1c82bb;
-  }
-  
-  .feedback-section {
-    margin-top: 40px;
-    background: #fffdee;
-    padding: 30px;
-    border-radius: 16px;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-    border: 3px solid #5c4033;
-    font-family: 'Fredoka One', cursive;
-  }
-  
-  .feedback-item {
-    background-color: #fef9e7;
-    border-left: 6px solid #f39c12;
-    margin-bottom: 20px;
-    padding: 16px 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-  }
-  
-  .feedback-item h4 {
-    margin: 0 0 8px 0;
-    font-size: 22px;
-    color: #333;
-  }
-  
-  .feedback-item p {
-    margin: 0;
-    font-size: 16px;
-    line-height: 1.5;
-    color: #444;
-  }
-  .selected-option {
-    border: 4px solid #28a745;
-    background-color: #eaffea;
-  }
-  
-  
-  .modal-box > button:last-child {
-    display: block;
-    margin: 0 auto;
-    margin-top: 20px;
-    background-color: #2d9cdb;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    font-weight: bold;
-    border-radius: 12px;
-    cursor: pointer;
-  }
+.centered-row-1 {
+  grid-column: 2;
+}
 
-  .continue-section {
-    text-align: center;
-    margin-top: 40px;
-  }
-  
-  .continue-button {
-    background-color: #28a745;
-    color: white;
-    font-size: 20px;
-    padding: 14px 30px;
-    border: none;
-    border-radius: 12px;
-    font-family: 'Fredoka One', cursive;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    transition: background-color 0.2s ease-in-out;
-  }
-  
-  .continue-button:hover {
-    background-color: #218838;
-  }
-  
-  .warning-modal {
-    background-color: #fff3f3;
-    border: 4px solid #e74c3c;
-    color: #c0392b;
-    text-align: center;
-  }
-  
-  .warning-modal h2 {
-    color: #e74c3c;
-  }
-  
+.centered-row-2 {
+  grid-column: 3;
+}
+
+.centered-row-3 {
+  grid-column: 4;
+}
+
+.category-card {
+  padding: 20px;
+  border-radius: 16px;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  color: #fff;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  text-shadow: 1px 1px 1px #00000050;
+
+  /* ADD THESE 👇 */
+word-wrap: break-word;
+hyphens: auto;
+white-space: normal;
+}
+
+.category-card:hover {
+  transform: scale(1.05);
+  box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+
+/* Button colors */
+.color-0 {
+  background-color: #f39c12;
+}
+.color-1 {
+  background-color: #e74c3c;
+}
+.color-2 {
+  background-color: #27ae60;
+}
+.color-3 {
+  background-color: #1abc9c;
+}
+.color-4 {
+  background-color: #3498db;
+}
+.color-5 {
+  background-color: #9b59b6;
+}
+.color-6 {
+  background-color: #ff6f91; /* 💡 You can change the color to whatever you like */
+}
+
+
+.bean-wrapper {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  z-index: 5; /* ✅ push it below the modal and feedback/button layer */
+pointer-events: none; /* ✅ let clicks pass through */
+}
+
+.bean-mascot {
+  width: 600px;
+  animation: wave 2s infinite ease-in-out;
+  pointer-events: none; /* prevent blocking */
+
+}
+@keyframes wave {
+0%, 100% { transform: rotate(0deg); }
+50% { transform: rotate(1.5deg); }
+}
+.bean-wrapper .speech-bubble {
+  position: absolute;
+  bottom: 460px;    /* ⬆ Move it much higher above the bean */
+  right: 360px;     /* ⬅ Adjust to the left of the bean's head */
+  background-color: #fff7d6;
+  color: #222;
+  padding: 12px 20px;
+  border-radius: 18px;
+  font-size: 22px;
+  font-weight: bold;
+  max-width: 240px;
+  text-align: center;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 10; /* make sure it's above background */
+  pointer-events: none;
+
+  word-wrap: break-word;
+white-space: normal;
+overflow-wrap: break-word;
+}
+
+
+.bean-wrapper .speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 80%;  /* adjusts arrow's horizontal position */
+  transform: translateX(-50%);
+  border-width: 10px;
+  border-style: solid;
+  border-color: #fff7d6 transparent transparent transparent;
+}
+@keyframes swingForwardBackward {
+  0%   { transform: perspective(800px) rotateX(0deg); }
+  25%  { transform: perspective(800px) rotateX(6deg); }
+  50%  { transform: perspective(800px) rotateX(-6deg); }
+  75%  { transform: perspective(800px) rotateX(4deg); }
+  100% { transform: perspective(800px) rotateX(0deg); }
+}
+
+
+.wooden-signs-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  animation: swingForwardBackward 3.5s ease-in-out infinite;
+transform-origin: top center;
+transform-style: preserve-3d;
+}
+
+.wooden-signs {
+  width: 500px;
+  max-width: 90vw;
+  height: auto;
+  transform-origin: top center; /* ✅ makes the sign swing from the top */
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  backdrop-filter: blur(4px);
+}
+
+.modal-box {
+  background: #fff7ef;
+  border-radius: 20px;
+  padding: 25px 30px;
+  max-width: 600px;
+  width: 90%;
+  text-align: left;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.3s ease-in-out;
+  font-family: 'Fredoka One', cursive;
+  border: 4px solid #5c4033;
+}
+
+.modal-box h2 {
+  margin-top: 0;
+  font-size: 28px;
+  text-align: center;
+  color: #222;
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.option-box {
+  background-color: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  border: 3px solid #d6a168;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.option-box h4 {
+  margin-top: 0;
+  font-size: 20px;
+  color: #333;
+}
+
+.option-box p {
+  margin: 6px 0;
+  font-size: 16px;
+  color: #444;
+}
+
+.option-box button {
+  background-color: #2d9cdb;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.option-box button:hover {
+  background-color: #1c82bb;
+}
+
+.feedback-section {
+  margin-top: 40px;
+  background: #fffdee;
+  padding: 30px;
+  border-radius: 16px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  border: 3px solid #5c4033;
+  font-family: 'Fredoka One', cursive;
+}
+
+.feedback-item {
+  background-color: #fef9e7;
+  border-left: 6px solid #f39c12;
+  margin-bottom: 20px;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.feedback-item h4 {
+  margin: 0 0 8px 0;
+  font-size: 22px;
+  color: #333;
+}
+
+.feedback-item p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #444;
+}
+.selected-option {
+  border: 4px solid #28a745;
+  background-color: #eaffea;
+}
+
+
+.modal-box > button:last-child {
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+  background-color: #2d9cdb;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  font-weight: bold;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.continue-section {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.continue-button {
+  background-color: #28a745;
+  color: white;
+  font-size: 20px;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Fredoka One', cursive;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.continue-button:hover {
+  background-color: #218838;
+}
+
+.warning-modal {
+  background-color: #fff3f3;
+  border: 4px solid #e74c3c;
+  color: #c0392b;
+  text-align: center;
+}
+
+.warning-modal h2 {
+  color: #e74c3c;
+}
