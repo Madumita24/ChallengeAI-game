@@ -1,0 +1,129 @@
+/* 🌞 Phase Three: Updated to match final reflective UI with meditating bean and soft yellow design */
+
+.phase-three-container {
+    background-image: url('../assets/reflective-bg.png'); /* add actual bg path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: #f4ba43;
+    min-height: 100vh;
+    padding: 2rem 6vw;
+    font-family: 'Fredoka One', cursive;
+    color: #3e2f19;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .title {
+    font-size: 2.8rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #3e2f19;
+    text-shadow: 1px 1px 2px #fff8c9;
+  }
+  
+  .bean-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .thinking-bean {
+    width: 180px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .bean-quote {
+    font-size: 1.8rem;
+    font-style: italic;
+    color: #3e2f19;
+    margin-bottom: 2rem;
+  }
+  
+  .questions-area {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 880px;
+    z-index: 1;
+  }
+  
+  .question-card {
+    background-color: #fce87f;
+    border: 4px solid #3e2f19;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .question-card:hover {
+    transform: scale(1.01);
+  }
+  
+  .question-card label {
+    font-weight: bold;
+    font-size: 1.05rem;
+    margin-bottom: 0.6rem;
+    display: block;
+    color: #3e2f19;
+  }
+  
+  .question-card textarea {
+    width: 100%;
+    height: 90px;
+    font-size: 1rem;
+    font-family: inherit;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    border: 2px solid #3e2f19;
+    background-color: #fff9c2;
+    resize: vertical;
+    box-shadow: inset 1px 1px 4px rgba(0,0,0,0.05);
+    color: #3e2f19;
+  }
+  
+  .mic-icon {
+    width: 32px;     /* increase size */
+    height: 32px;
+    position: absolute;
+    bottom: 8px;
+    right: -2px;
+    cursor: pointer;
+  }
+  
+  
+  .submit-area {
+    text-align: center;
+    margin-top: 2.5rem;
+  }
+  
+  .submit-btn {
+    background-color: #3e2f19;
+    color: white;
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Fredoka One', cursive;
+    transition: background-color 0.2s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .submit-btn:hover {
+    background-color: #2a2418;
+  }
+  
+  .footer-note {
+    font-size: 0.95rem;
+    font-style: italic;
+    margin-top: 0.75rem;
+    color: #3e2f19;
+  }
+  
