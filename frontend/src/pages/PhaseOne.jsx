@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './PhaseOne.css';
 import bean from '../assets/bean-character.png';
 import { policies, policyFeedback } from '../data/policyFeedback';
 import { useNavigate } from 'react-router-dom';
-
 
 const PhaseOne = () => {
   const [budget, setBudget] = useState(14);
@@ -12,9 +11,8 @@ const PhaseOne = () => {
   const [chosenPolicies, setChosenPolicies] = useState({});
   const [feedback, setFeedback] = useState({});
   const [bubbleText, setBubbleText] = useState("Choose a policy area to begin!");
-  const [showWarningModal, setShowWarningModal] = useState(false); // 🚨 NEW
+  const [showWarningModal, setShowWarningModal] = useState(false);
   const navigate = useNavigate();
-
 
   const speak = (text) => {
     const utterance = new SpeechSynthesisUtterance(text);
@@ -24,18 +22,14 @@ const PhaseOne = () => {
   };
 
   const handleCardClick = (category) => {
-    
-      setSelectedCategory(category);
-      setShowModal(true);
-    
+    setSelectedCategory(category);
+    setShowModal(true);
   };
 
   const handleOptionSelect = (option) => {
-    // Step 1: Remove previous cost (if already selected)
     const previousCost = chosenPolicies[selectedCategory]?.cost || 0;
     const newBudget = budget + previousCost;
-  
-    // Step 2: Check if the new option is affordable
+
     if (newBudget < option.cost) {
       alert("Not enough budget!");
       return;
@@ -53,14 +47,40 @@ const PhaseOne = () => {
   };
 
   const handleContinue = () => {
-    if (Object.keys(chosenPolicies).length < Object.keys(policies).length) {
-      setShowWarningModal(true); // 👀 trigger modal
-    } else {
-        // Store policy data in localStorage (or context if using)
-        localStorage.setItem("userPolicies", JSON.stringify(chosenPolicies));
-        navigate('/phase-two');
+    const totalCategories = Object.keys(policies).length;
+    const selectedTitles = Object.values(chosenPolicies).map(p => p.title);
+
+    if (Object.keys(chosenPolicies).length < totalCategories) {
+      setShowWarningModal(true);
+      return;
     }
+
+    // Prevent all Option 1s or all Option 2s
+    const option1TitleList = Object.values(policies).map(cat => cat[0].title);
+    const option2TitleList = Object.values(policies).map(cat => cat[1].title);
+
+    const allAreOption1 = selectedTitles.every(title => option1TitleList.includes(title));
+    const allAreOption2 = selectedTitles.every(title => option2TitleList.includes(title));
+
+    if (allAreOption1 || allAreOption2) {
+      alert("You must make a more diverse set of choices. Please mix options from different columns.");
+      return;
+    }
+
+    localStorage.setItem("userPolicies", JSON.stringify(chosenPolicies));
+    navigate('/phase-two');
   };
+
+  // ⌨️ Enable Enter key to trigger Continue
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Enter') {
+        handleContinue();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [chosenPolicies]);
 
   return (
     <div className="phase-one-container">
@@ -103,20 +123,18 @@ const PhaseOne = () => {
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
             <h2>{selectedCategory}</h2>
             {policies[selectedCategory].map((opt, i) => {
-  const isSelected = chosenPolicies[selectedCategory]?.title === opt.title;
-
-  return (
-    <div key={i} className={`option-box ${isSelected ? "selected-option" : ""}`}>
-      <h4>{opt.title} (Cost: {opt.cost})</h4>
-      <p><strong>Pros:</strong> {opt.pros}</p>
-      <p><strong>Cons:</strong> {opt.cons}</p>
-      <button onClick={() => handleOptionSelect(opt)}>
-        {isSelected ? "✅ Selected" : "Choose This"}
-      </button>
-    </div>
-  );
-})}
-
+              const isSelected = chosenPolicies[selectedCategory]?.title === opt.title;
+              return (
+                <div key={i} className={`option-box ${isSelected ? "selected-option" : ""}`}>
+                  <h4>{opt.title} (Cost: {opt.cost})</h4>
+                  <p><strong>Pros:</strong> {opt.pros}</p>
+                  <p><strong>Cons:</strong> {opt.cons}</p>
+                  <button onClick={() => handleOptionSelect(opt)}>
+                    {isSelected ? "✅ Selected" : "Choose This"}
+                  </button>
+                </div>
+              );
+            })}
             <button onClick={() => setShowModal(false)}>Cancel</button>
           </div>
         </div>
@@ -139,7 +157,7 @@ const PhaseOne = () => {
         </button>
       </div>
 
-      {/* 🚨 Warning Modal if not complete */}
+      {/* 🚨 Warning Modal */}
       {showWarningModal && (
         <div className="modal-overlay" onClick={() => setShowWarningModal(false)}>
           <div className="modal-box warning-modal" onClick={(e) => e.stopPropagation()}>

@@ -71,7 +71,7 @@ export default function ElectedPage({ name }) {
 
       {/* Floating Bean Character + Speech Bubble */}
       <div className="floating-bean">
-        <div className="speech-bubble">Let's see what I sign up for?</div>
+        <div className="speech-bubble">What do I sign up for ?</div>
         <img src={beanReader} alt="Reading Bean" className="bean-reader" />
       </div>
     </div>

@@ -139,26 +139,27 @@ pointer-events: none; /* ✅ let clicks pass through */
 0%, 100% { transform: rotate(0deg); }
 50% { transform: rotate(1.5deg); }
 }
+
 .bean-wrapper .speech-bubble {
   position: absolute;
-  bottom: 460px;    /* ⬆ Move it much higher above the bean */
-  right: 360px;     /* ⬅ Adjust to the left of the bean's head */
+  right: 140px;      /* ⬅ Aligns it closer to bean's head */
   background-color: #fff7d6;
   color: #222;
   padding: 12px 20px;
   border-radius: 18px;
   font-size: 22px;
   font-weight: bold;
-  max-width: 240px;
+  max-width: 280px;
   text-align: center;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-  z-index: 10; /* make sure it's above background */
+  z-index: 10;
   pointer-events: none;
-
   word-wrap: break-word;
-white-space: normal;
-overflow-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+  transition: all 0.3s ease-in-out;
 }
+
 
 
 .bean-wrapper .speech-bubble::after {
