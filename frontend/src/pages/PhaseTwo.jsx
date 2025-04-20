@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PhaseTwo.css';
+import { setDoc, doc } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
 
 import bgImage from '../assets/bg.png';
 import agentBlue from '../assets/agent-blue.png';
@@ -55,138 +57,51 @@ export default function PhaseTwo() {
   const categories = Object.keys(initialPolicies);
   const navigate = useNavigate();
 
+  const [userName, setUserName] = useState('');
+  const [sessionId, setSessionId] = useState('');
   const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
-  const [userVotes, setUserVotes] = useState({});
-  const [groupVotes, setGroupVotes] = useState({});
-  const [agentComments, setAgentComments] = useState([]);
-  const [agentVotes, setAgentVotes] = useState([]);
-  const [agentReasons, setAgentReasons] = useState([]);
+  const [userVotesArray, setUserVotesArray] = useState([]);
+  const [currentVote, setCurrentVote] = useState(null);
+  const [agentVotesByAgent, setAgentVotesByAgent] = useState({
+    agent_1: [],
+    agent_2: [],
+    agent_3: [],
+    agent_4: []
+  });
+  const [agentReplies, setAgentReplies] = useState([]);
   const [userSpeech, setUserSpeech] = useState('');
-  const [finalDecision, setFinalDecision] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [showResults, setShowResults] = useState(false);
-  const [debateComplete, setDebateComplete] = useState(false);
-  const [agentSpeakingIndex, setAgentSpeakingIndex] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
+  const [debateComplete, setDebateComplete] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [agentSpeakingIndex, setAgentSpeakingIndex] = useState(null);
   const [voices, setVoices] = useState([]);
 
-  useEffect(() => {
-    const synth = window.speechSynthesis;
-  
-    const populateVoices = () => {
-      const availableVoices = synth.getVoices();
-      console.log("🗣️ Available voices:", availableVoices.map(v => v.name));
-      setVoices(availableVoices);
-    };
-  
-    // Chrome sometimes delays voice loading — trigger it with a timeout
-    setTimeout(() => {
-      populateVoices();
-    }, 100);
-  
-    if (synth.onvoiceschanged !== undefined) {
-      synth.onvoiceschanged = populateVoices;
-    }
-  }, []);
-  
-
-
   const currentCategory = categories[currentCategoryIndex];
-  const currentVote = userVotes[currentCategory] || '';
-  const maxBudget = 14;
 
-  const getOptionScore = (value) => parseInt(value, 10);
-  const usedBudget = Object.values(userVotes).reduce((acc, val) => acc + getOptionScore(val), 0);
-  const remainingBudget = maxBudget - usedBudget;
+  useEffect(() => {
+    const name = localStorage.getItem("userName");
+    const session = localStorage.getItem("sessionId");
+    if (!name || !session) {
+      alert("Missing session info. Returning to start.");
+      navigate('/');
+    } else {
+      setUserName(name);
+      setSessionId(session);
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const synth = window.speechSynthesis;
-    const populateVoices = () => {
-      const availableVoices = synth.getVoices();
-      setVoices(availableVoices);
-    };
-    populateVoices();
+    const populateVoices = () => setVoices(synth.getVoices());
     synth.onvoiceschanged = populateVoices;
+    populateVoices();
   }, []);
 
-  useEffect(() => {
-    setShowResults(false);
-    setFinalDecision(null);
-    setAgentVotes([]);
-    setAgentReasons([]);
-    setAgentComments([]);
-    setUserSpeech('');
-    setDebateComplete(false);
-  }, [currentCategory]);
-
-  const handleVote = (value) => {
-    const proposed = getOptionScore(value);
-    const previous = getOptionScore(userVotes[currentCategory] || 0);
-    if (usedBudget - previous + proposed > maxBudget) {
-      alert("Not enough budget left.");
-      return;
-    }
-    setUserVotes({ ...userVotes, [currentCategory]: value });
-  };
-
-  const handleConfirmVote = async () => {
-    if (!currentVote) {
-      alert("Please select a vote to save your preference.");
-      return;
-    }
-
-    const existingVotes = JSON.parse(localStorage.getItem("userVotes")) || {};
-    const updatedVotes = {
-      ...existingVotes,
-      [currentCategory]: currentVote
-    };
-    localStorage.setItem("userVotes", JSON.stringify(updatedVotes));
-
-    setLoading(true);
-    try {
-      const res = await fetch('/submit-vote', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userId: localStorage.getItem("sessionId"),
-          category: currentCategory,
-          userVote: currentVote
-        })
-      });
-
-      const data = await res.json();
-      setAgentVotes(data.agentVotes);
-      setAgentReasons(data.agentReasons);
-      setFinalDecision(data.finalDecision);
-
-      setGroupVotes(prev => ({
-        ...prev,
-        [currentCategory]: {
-          user: currentVote,
-          agents: data.agentVotes,
-          agentReasons: data.agentReasons,
-          finalDecision: data.finalDecision
-        }
-      }));
-      setShowResults(true);
-    } catch (err) {
-      console.error("Voting failed:", err);
-    } finally {
-      setLoading(false);
-
-      if (currentCategoryIndex < categories.length - 1) {
-        setCurrentCategoryIndex(currentCategoryIndex + 1);
-      } else {
-        localStorage.setItem("groupVotes", JSON.stringify(groupVotes));
-        navigate('/summary');
-      }
-    }
-  };
-
-  const startUserSpeechDebate = () => {
+  const startDebate = () => {
     const recognition = new window.webkitSpeechRecognition();
     recognition.lang = 'en-US';
     recognition.interimResults = false;
+    recognition.continuous = false;
     recognition.maxAlternatives = 1;
 
     recognition.start();
@@ -194,97 +109,100 @@ export default function PhaseTwo() {
 
     recognition.onresult = async (event) => {
       setIsRecording(false);
-      const spokenText = event.results[0][0].transcript;
-      setUserSpeech(spokenText);
+      const spoken = event.results[0][0].transcript;
+      setUserSpeech(spoken);
+      setDebateComplete(false);
+      setAgentReplies([]);
 
       try {
-        const res = await fetch('/user-debate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            sessionId: localStorage.getItem("sessionId"),
-            category: currentCategory,
-            userSpeech: spokenText
-          })
+        // const res = await fetch('/user-debate', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({
+        //     sessionId,
+        //     category: currentCategory,
+        //     userSpeech: spoken
+        //   })
+        // });
+          const res = await fetch('http://localhost:3001/user-debate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              sessionId,
+              category: currentCategory,
+              userSpeech: spoken
+            })
+          });
+        
+
+        if (!res.ok) throw new Error(`Backend error: ${res.status}`);
+
+        const { agentReplies, agentVotes } = await res.json();
+
+        const updated = { ...agentVotesByAgent };
+        agentVotes.forEach((vote, index) => {
+          updated[`agent_${index + 1}`].push(vote);
         });
+        setAgentVotesByAgent(updated);
 
-        const data = await res.json();
-        const replies = data.agentReplies;
-        const updatedComments = [];
-        //const usableVoices = voices.length ? voices : [];
-     // ✅ Map preferred voice names to agents
-const voiceNameMap = [
-  "Microsoft David - English (United States)",
-  "Microsoft Zira - English (United States)",
-  "Microsoft David - English (United States)",
-  "Microsoft Zira - English (United States)"
-  // "Google US English",
-  // "Google UK English Female"
-];
+        const voiceNameMap = [
+          "Microsoft David - English (United States)",
+          "Microsoft Zira - English (United States)",
+          "Microsoft David - English (United States)",
+          "Microsoft Zira - English (United States)"
+        ];
 
-// 🎯 Map to actual available voice objects
-const usableVoices = voiceNameMap.map(name =>
-  voices.find(v => v.name === name)
-);
+        const usableVoices = voiceNameMap.map(name =>
+          voices.find(v => v.name === name)
+        );
+        const fallbackVoice = voices.find(v => v.lang.startsWith('en')) || voices[0] || null;
 
-// 💬 Fallback if a voice is missing
-const fallbackVoice = voices.find(v => v.lang.startsWith('en')) || voices[0] || null;
+        const updatedReplies = [];
 
-console.log("🎙️ Agent Voice Assignments:");
-usableVoices.forEach((v, i) => {
-  console.log(`Agent ${i + 1}: ${v?.name || '❌ Not found, will fallback'}`);
-});
+        for (let i = 0; i < agentReplies.length; i++) {
+          setAgentSpeakingIndex(i);
+          updatedReplies[i] = '';
+          setAgentReplies([...updatedReplies]);
 
-for (let i = 0; i < replies.length; i++) {
-  setAgentSpeakingIndex(i);
-  updatedComments[i] = '';
-  setAgentComments([...updatedComments]);
+          const reply = agentReplies[i];
+          const tts = new SpeechSynthesisUtterance(reply);
+          tts.voice = usableVoices[i] || fallbackVoice;
+          tts.pitch = 1;
+          tts.rate = 1;
+          tts.volume = 1;
+          tts.lang = 'en-US';
 
-  const reply = replies[i];
-  const tts = new SpeechSynthesisUtterance(reply);
+          const typeEffect = () =>
+            new Promise(resolve => {
+              let idx = 0;
+              const interval = setInterval(() => {
+                if (idx < reply.length) {
+                  updatedReplies[i] += reply[idx];
+                  setAgentReplies([...updatedReplies]);
+                  idx++;
+                } else {
+                  clearInterval(interval);
+                  resolve();
+                }
+              }, 10);
+            });
 
-  const selectedVoice = usableVoices[i] || fallbackVoice;
-  tts.voice = selectedVoice;
-  tts.pitch = 1;
-  tts.rate = 1;
-  tts.volume = 1;
-  tts.lang = 'en-US';
+          const speechPromise = new Promise(resolve => {
+            tts.onend = resolve;
+            window.speechSynthesis.cancel();
+            setTimeout(() => {
+              window.speechSynthesis.speak(tts);
+            }, 150);
+          });
 
-  console.log(`🧠 Agent ${i + 1} speaking with: ${selectedVoice?.name}`);
-
-  const typeEffect = () => {
-    return new Promise(resolve => {
-      let index = 0;
-      const interval = setInterval(() => {
-        if (index < reply.length) {
-          updatedComments[i] += reply[index];
-          setAgentComments([...updatedComments]);
-          index++;
-        } else {
-          clearInterval(interval);
-          resolve();
+          await Promise.all([typeEffect(), speechPromise]);
         }
-      }, 10);
-    });
-  };
-
-  const speechPromise = new Promise(resolve => {
-    tts.onend = resolve;
-    window.speechSynthesis.cancel(); // stop leftovers
-    setTimeout(() => {
-      window.speechSynthesis.speak(tts);
-    }, 150); // slight delay to prevent drop
-  });
-
-  await Promise.all([typeEffect(), speechPromise]);
-}
-
 
         setAgentSpeakingIndex(null);
         setDebateComplete(true);
       } catch (err) {
-        console.error("Voice debate error:", err);
-        setIsRecording(false);
+        console.error("❌ Error during debate fetch:", err);
+        alert("Backend failed to respond. Check your server or try again.");
       }
     };
 
@@ -292,20 +210,77 @@ for (let i = 0; i < replies.length; i++) {
       console.error("Speech recognition error:", e.error);
       setIsRecording(false);
     };
+    recognition.onend = () => setIsRecording(false);
+  };
+
+  const handleOptionSelect = (vote) => {
+    setCurrentVote(vote);
+  };
+
+  const handleConfirmVote = async () => {
+    if (!debateComplete) {
+      alert("Please complete the debate before continuing.");
+      return;
+    }
+
+    if (!currentVote) {
+      alert("Please select a voting option before continuing.");
+      return;
+    }
+
+    // const updatedVotes = [...userVotesArray, currentVote];
+    // setUserVotesArray(updatedVotes);
+    const updatedVotes = [...userVotesArray, currentVote];
+setUserVotesArray(updatedVotes);
+
+// 🧠 Get the full text of the selected option
+const selectedOptionText = optionDescriptions[currentCategory][currentVote - 1];
+
+// 🗳️ Create or update a separate array for verbose votes
+const userVotesVerbose = JSON.parse(localStorage.getItem('userVotesVerbose')) || [];
+userVotesVerbose.push(selectedOptionText);
+localStorage.setItem('userVotesVerbose', JSON.stringify(userVotesVerbose));
+
+    setLoading(true);
+
+    try {
+      await setDoc(doc(db, 'PhaseTwoVotes', sessionId), {
+        sessionId,
+        userName,
+        userVotesArray: updatedVotes,
+        userVotesVerbose,
+        agentVotesByAgent,
+        timestamp: new Date()
+      });
+
+      if (currentCategoryIndex < categories.length - 1) {
+        setCurrentCategoryIndex(currentCategoryIndex + 1);
+        setDebateComplete(false);
+        setUserSpeech('');
+        setAgentReplies([]);
+        setCurrentVote(null);
+      } else {
+        navigate('/summary');
+      }
+    } catch (err) {
+      console.error("Error storing vote data:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="phase-two-container" style={{ backgroundImage: `url(${bgImage})` }}>
       <div className="budget-bar">
-        Budget Remaining: <span>{remainingBudget}</span> / {maxBudget}
+        <strong>Budget Remaining:</strong> {14 - userVotesArray.reduce((acc, v) => acc + parseInt(v), 0)} / 14
       </div>
 
       <div className="table-group">
         {agentImages.map((img, i) => (
           <div className={`agent-wrapper angle-${angles[i]}`} key={i}>
-            <img src={img} alt={`Agent ${i}`} className="agent" />
+            <img src={img} alt={`Agent ${i + 1}`} className="agent" />
             <div className={`speech-bubble ${agentSpeakingIndex === i ? 'speaking' : ''}`}>
-              {agentComments[i] || ""}
+              {agentReplies[i] || ""}
             </div>
           </div>
         ))}
@@ -321,19 +296,17 @@ for (let i = 0; i < replies.length; i++) {
                 type="radio"
                 name="vote"
                 value={val}
-                checked={currentVote === String(val)}
-                onChange={(e) => handleVote(e.target.value)}
+                onChange={() => handleOptionSelect(val)}
+                checked={currentVote === val}
+                disabled={loading}
               />
-              <strong>Option {val}:</strong> {optionDescriptions[currentCategory]?.[idx]}
+              <strong>Option {val}:</strong> {optionDescriptions[currentCategory][idx]}
             </label>
           ))}
         </div>
 
         <div className="speak-wrapper">
-          <button
-            className={`speak-button ${isRecording ? 'recording' : ''}`}
-            onClick={startUserSpeechDebate}
-          >
+          <button className={`speak-button ${isRecording ? 'recording' : ''}`} onClick={startDebate}>
             {isRecording ? '🎤 Listening...' : '🎙 Let’s First Discuss'}
           </button>
           {userSpeech && <p><strong>You said:</strong> {userSpeech}</p>}
@@ -344,19 +317,6 @@ for (let i = 0; i < replies.length; i++) {
             <button onClick={handleConfirmVote} disabled={loading}>
               Save & Continue
             </button>
-          </div>
-        )}
-
-        {showResults && (
-          <div className="vote-moderator">
-            <p>🧠 Agent Votes: {agentVotes.join(', ')}</p>
-            <p>🧾 Agent Reasons:</p>
-            <ul>
-              {agentReasons.map((r, i) => (
-                <li key={i}><strong>Agent {i + 1}:</strong> {r}</li>
-              ))}
-            </ul>
-            <p>🗳 Final Group Decision: Option {finalDecision}</p>
           </div>
         )}
       </div>

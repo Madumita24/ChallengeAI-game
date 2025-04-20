@@ -1,7 +1,13 @@
 import React, { useState, useRef } from 'react';
 import './PhaseThree.css';
 import thinkingBean from '../assets/bean-thinking.png';
+import { setDoc, doc } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
+import { getFunctions, httpsCallable } from "firebase/functions";
+import { app } from "../firebaseConfig"; // ✅ ensure you export app from firebaseConfig.js
 
+
+import { useNavigate } from 'react-router-dom';
 const questions = [
   "What emotions came up for you during the decision-making process—discomfort, frustration, detachment, guilt? What do those feelings reveal about your position in relation to refugee education?",
   "Did anything about your role in the game feel familiar—either from your personal or professional life? If so, how?",
@@ -18,6 +24,7 @@ const questions = [
 const PhaseThree = () => {
   const [responses, setResponses] = useState({});
   const recognitionRef = useRef(null);
+  const navigate = useNavigate(); // 👈 you need this
 
   const handleChange = (index, value) => {
     setResponses(prev => ({ ...prev, [index]: value }));
@@ -56,11 +63,62 @@ const PhaseThree = () => {
     };
   };
 
-  const handleSubmit = () => {
-    localStorage.setItem("reflectionResponses", JSON.stringify(responses));
-    alert("Reflections saved. Thank you for your honesty.");
-  };
+  const handleSubmit = async () => {
+    const sessionId = localStorage.getItem("sessionId");
+    const userName = localStorage.getItem("userName"); // 👈 Add this line
 
+    try {
+      await setDoc(doc(db, "phaseThreeReflections", sessionId), {
+        userName,
+        sessionId,
+        reflections: responses,
+        timestamp: new Date()
+      });
+      alert("✅ Reflections saved successfully.");
+      navigate("/thankyou"); // ✅ Redirect to Thank You page
+    } catch (err) {
+      console.error("❌ Failed to save reflections:", err);
+      alert("Error saving reflections.");
+    }
+  };
+  ///////////////////////////
+  // const handleSubmit = async () => {
+  //   const sessionId = localStorage.getItem("sessionId");
+  //   const userName = localStorage.getItem("userName");
+  
+  //   try {
+  //     // ✅ 1. Save reflection data to Firestore
+  //     await setDoc(doc(db, "phaseThreeReflections", sessionId), {
+  //       userName,
+  //       sessionId,
+  //       reflections: responses,
+  //       timestamp: new Date(),
+  //     });
+  
+  //     // ✅ 2. Call your local Express backend to send the email
+  //     const response = await fetch("http://localhost:4000/send-report", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ sessionId }),
+  //     });
+  
+  //     const result = await response.json();
+  
+  //     if (result.success) {
+  //       alert("✅ Reflections saved & report emailed.");
+  //       navigate("/thankyou");
+  //     } else {
+  //       throw new Error(result.error || "Unknown error");
+  //     }
+  //   } catch (err) {
+  //     console.error("❌ Failed to save or send report:", err);
+  //     alert("Something went wrong while saving or sending the report.");
+  //   }
+  // };
+  
+  
   return (
     <div className="phase-three-container">
       <h1 className="title">Time to Reflect in the Republic of Bean!</h1>
@@ -80,14 +138,12 @@ const PhaseThree = () => {
               placeholder="Type your answer here or you can speak ..."
             />
             <img
-  src={require('../assets/mic-icon.png')}
-  alt="Mic Icon"
-  className="mic-icon"
-  onClick={() => handleMicClick(index)}
-  title="Click to speak"
-/>
-
-
+              src={require('../assets/mic-icon.png')}
+              alt="Mic Icon"
+              className="mic-icon"
+              onClick={() => handleMicClick(index)}
+              title="Click to speak"
+            />
           </div>
         ))}
       </div>

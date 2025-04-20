@@ -7,8 +7,15 @@ export default function WelcomePage() {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
-    if (name.trim()) {
-      navigate('/elected', { state: { name } });
+    const trimmedName = name.trim();
+    if (trimmedName) {
+      // ✅ Save to localStorage
+      const sessionId = crypto.randomUUID(); // generate unique session ID
+      localStorage.setItem("userName", trimmedName);
+      localStorage.setItem("sessionId", sessionId);
+
+      // ✅ Navigate to next page
+      navigate('/elected');
     } else {
       alert('Please enter your name before proceeding.');
     }

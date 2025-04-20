@@ -1,0 +1,82 @@
+[debug] [2025-04-20T05:58:24.525Z] ----------------------------------------------------------------------
+[debug] [2025-04-20T05:58:24.528Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\dheer\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions:sendReportEmail --debug --force
+[debug] [2025-04-20T05:58:24.528Z] CLI Version:   14.2.0
+[debug] [2025-04-20T05:58:24.528Z] Platform:      win32
+[debug] [2025-04-20T05:58:24.528Z] Node Version:  v22.14.0
+[debug] [2025-04-20T05:58:24.529Z] Time:          Sat Apr 19 2025 22:58:24 GMT-0700 (Mountain Standard Time)
+[debug] [2025-04-20T05:58:24.529Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-04-20T05:58:24.730Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-04-20T05:58:24.731Z] > authorizing via signed-in user (dheeraj.gpt.assistant@gmail.com)
+[debug] [2025-04-20T05:58:24.732Z] [iam] checking project republic-of-beans for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2025-04-20T05:58:24.733Z] Checked if tokens are valid: true, expires at: 1745132210091
+[debug] [2025-04-20T05:58:24.734Z] Checked if tokens are valid: true, expires at: 1745132210091
+[debug] [2025-04-20T05:58:24.735Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/republic-of-beans:testIamPermissions [none]
+[debug] [2025-04-20T05:58:24.735Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/republic-of-beans:testIamPermissions x-goog-quota-user=projects/republic-of-beans
+[debug] [2025-04-20T05:58:24.736Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/republic-of-beans:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-04-20T05:58:25.111Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/republic-of-beans:testIamPermissions 200
+[debug] [2025-04-20T05:58:25.111Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/republic-of-beans:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-04-20T05:58:25.112Z] Checked if tokens are valid: true, expires at: 1745132210091
+[debug] [2025-04-20T05:58:25.113Z] Checked if tokens are valid: true, expires at: 1745132210091
+[debug] [2025-04-20T05:58:25.113Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/republic-of-beans/serviceAccounts/republic-of-beans@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2025-04-20T05:58:25.113Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/republic-of-beans/serviceAccounts/republic-of-beans@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-04-20T05:58:25.481Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/republic-of-beans/serviceAccounts/republic-of-beans@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2025-04-20T05:58:25.481Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/republic-of-beans/serviceAccounts/republic-of-beans@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'republic-of-beans'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] +  functions: Finished running predeploy script. 
+[debug] [2025-04-20T05:58:25.937Z] Checked if tokens are valid: true, expires at: 1745132210091
+[debug] [2025-04-20T05:58:25.938Z] Checked if tokens are valid: true, expires at: 1745132210091
+[debug] [2025-04-20T05:58:25.938Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/republic-of-beans [none]
+[debug] [2025-04-20T05:58:26.064Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/republic-of-beans 200
+[debug] [2025-04-20T05:58:26.064Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/republic-of-beans {"projectNumber":"764049590103","projectId":"republic-of-beans","lifecycleState":"ACTIVE","name":"Republic of Beans","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-04-16T21:37:35.086173Z"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[debug] [2025-04-20T05:58:26.067Z] Checked if tokens are valid: true, expires at: 1745132210091
+[debug] [2025-04-20T05:58:26.068Z] Checked if tokens are valid: true, expires at: 1745132210091
+[debug] [2025-04-20T05:58:26.068Z] Checked if tokens are valid: true, expires at: 1745132210091
+[debug] [2025-04-20T05:58:26.069Z] Checked if tokens are valid: true, expires at: 1745132210091
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[debug] [2025-04-20T05:58:26.070Z] Checked if tokens are valid: true, expires at: 1745132210091
+[debug] [2025-04-20T05:58:26.071Z] Checked if tokens are valid: true, expires at: 1745132210091
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2025-04-20T05:58:26.071Z] Checked if tokens are valid: true, expires at: 1745132210091
+[debug] [2025-04-20T05:58:26.071Z] Checked if tokens are valid: true, expires at: 1745132210091
+[debug] [2025-04-20T05:58:26.072Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/cloudfunctions.googleapis.com [none]
+[debug] [2025-04-20T05:58:26.072Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/republic-of-beans
+[debug] [2025-04-20T05:58:26.073Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/runtimeconfig.googleapis.com [none]
+[debug] [2025-04-20T05:58:26.074Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/republic-of-beans
+[debug] [2025-04-20T05:58:26.076Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/cloudbuild.googleapis.com [none]
+[debug] [2025-04-20T05:58:26.078Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/cloudbuild.googleapis.com x-goog-quota-user=projects/republic-of-beans
+[debug] [2025-04-20T05:58:26.079Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/artifactregistry.googleapis.com [none]
+[debug] [2025-04-20T05:58:26.079Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/artifactregistry.googleapis.com x-goog-quota-user=projects/republic-of-beans
+[debug] [2025-04-20T05:58:26.490Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/runtimeconfig.googleapis.com 200
+[debug] [2025-04-20T05:58:26.491Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2025-04-20T05:58:26.494Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/cloudbuild.googleapis.com 200
+[debug] [2025-04-20T05:58:26.494Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/cloudbuild.googleapis.com [omitted]
+[warn] !  functions: missing required API cloudbuild.googleapis.com. Enabling now... 
+[debug] [2025-04-20T05:58:26.495Z] Checked if tokens are valid: true, expires at: 1745132210091
+[debug] [2025-04-20T05:58:26.495Z] Checked if tokens are valid: true, expires at: 1745132210091
+[debug] [2025-04-20T05:58:26.495Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/cloudbuild.googleapis.com:enable [none]
+[debug] [2025-04-20T05:58:26.496Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/cloudbuild.googleapis.com:enable x-goog-quota-user=projects/republic-of-beans
+[debug] [2025-04-20T05:58:26.500Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/artifactregistry.googleapis.com 200
+[debug] [2025-04-20T05:58:26.500Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/artifactregistry.googleapis.com [omitted]
+[warn] !  artifactregistry: missing required API artifactregistry.googleapis.com. Enabling now... 
+[debug] [2025-04-20T05:58:26.502Z] Checked if tokens are valid: true, expires at: 1745132210091
+[debug] [2025-04-20T05:58:26.502Z] Checked if tokens are valid: true, expires at: 1745132210091
+[debug] [2025-04-20T05:58:26.502Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/artifactregistry.googleapis.com:enable [none]
+[debug] [2025-04-20T05:58:26.503Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/artifactregistry.googleapis.com:enable x-goog-quota-user=projects/republic-of-beans
+[debug] [2025-04-20T05:58:26.505Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/cloudfunctions.googleapis.com 200
+[debug] [2025-04-20T05:58:26.505Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/cloudfunctions.googleapis.com [omitted]
+[info] +  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2025-04-20T05:58:26.645Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/artifactregistry.googleapis.com:enable 400
+[debug] [2025-04-20T05:58:26.646Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/artifactregistry.googleapis.com:enable [omitted]
+[debug] [2025-04-20T05:58:26.663Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/cloudbuild.googleapis.com:enable 400
+[debug] [2025-04-20T05:58:26.663Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/republic-of-beans/services/cloudbuild.googleapis.com:enable [omitted]
+[error] 
+[error] Error: Your project republic-of-beans must be on the Blaze (pay-as-you-go) plan to complete this command. Required API artifactregistry.googleapis.com can't be enabled until the upgrade is complete. To upgrade, visit the following URL:
+
+https://console.firebase.google.com/project/republic-of-beans/usage/details

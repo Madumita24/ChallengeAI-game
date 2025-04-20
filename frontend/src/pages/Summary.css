@@ -1,0 +1,95 @@
+/* PolicySummary.css */
+.summary-container {
+    background-image: url('../assets/summarybg.png'); /* ensure path is correct */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    padding: 2rem 5vw;
+    font-family: 'Fredoka One', cursive;
+  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    color: #ffeccf;
+  }
+  
+  .title,
+  .subtitle {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 2.8rem;
+    color: #ffddaa;
+    text-shadow: 2px 2px 4px #3e220f;
+  }
+  
+  /* TABLE STYLING */
+  .vote-table {
+    width: 90%;
+    table-layout: fixed; /* Ensures equal column widths */
+    border-collapse: collapse;
+    margin-bottom: 2.5rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px #2b180a;
+    background-color: #ffeccf;
+  }
+  
+  .vote-table th,
+  .vote-table td {
+    border: 2px solid #3e220f;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.2rem;
+    width: calc(100% / 7); /* Ensures even distribution across columns */
+  }
+  
+  .vote-table th {
+    background-color: #d29853;
+    color: #291707;
+  }
+  
+  .vote-table td {
+    background-color: #fbeac3;
+    color: #291707;
+  }
+  
+  .vote-table.dark-theme th {
+    background-color: #b87a39;
+  }
+  
+  .vote-table.dark-theme td {
+    background-color: #ffe9b6;
+  }
+  
+  /* Agent Column Header Highlighting */
+  .vote-table th:nth-child(2) { color: #000; } /* Blue */
+  .vote-table th:nth-child(3) { color: #000; } /* Green */
+  .vote-table th:nth-child(4) { color: #000; } /* Orange */
+  .vote-table th:nth-child(5) { color: #000; } /* Red */
+  .vote-table th:nth-child(6) { color: #000; }     /* User */
+
+  .agent-icon {
+    width: 40px;
+    height: 40px;
+    display: block;
+    margin: 0 auto 0.3rem;
+  }
+  .continue-button {
+    margin-top: 2rem;
+    padding: 0.75rem 2rem;
+    font-size: 1.2rem;
+    background-color: #f7c066;
+    border: none;
+    border-radius: 8px;
+    color: #3e2f19;
+    cursor: pointer;
+    font-family: 'Fredoka One', cursive;
+    transition: background-color 0.3s ease;
+  }
+  
+  .continue-button:hover {
+    background-color: #ffdb8d;
+  }
+  

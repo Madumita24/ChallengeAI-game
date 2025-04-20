@@ -11,9 +11,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@sendgrid/mail": "^8.1.5",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "firebase-admin": "^13.2.0",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.28",
     "openai": "^4.95.1"
   },
   "devDependencies": {
