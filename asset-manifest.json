@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ChallengeAI-game/static/css/main.c6b02fef.css",
-    "main.js": "/ChallengeAI-game/static/js/main.bbb3c734.js",
+    "main.js": "/ChallengeAI-game/static/js/main.1569ac29.js",
     "static/js/239.3e44191b.chunk.js": "/ChallengeAI-game/static/js/239.3e44191b.chunk.js",
     "static/js/977.bdb9de7a.chunk.js": "/ChallengeAI-game/static/js/977.bdb9de7a.chunk.js",
     "static/js/732.64c8f78a.chunk.js": "/ChallengeAI-game/static/js/732.64c8f78a.chunk.js",
@@ -29,7 +29,7 @@
     "static/media/sparkle.gif": "/ChallengeAI-game/static/media/sparkle.4efdfdf91504a5ed0bdd.gif",
     "index.html": "/ChallengeAI-game/index.html",
     "main.c6b02fef.css.map": "/ChallengeAI-game/static/css/main.c6b02fef.css.map",
-    "main.bbb3c734.js.map": "/ChallengeAI-game/static/js/main.bbb3c734.js.map",
+    "main.1569ac29.js.map": "/ChallengeAI-game/static/js/main.1569ac29.js.map",
     "239.3e44191b.chunk.js.map": "/ChallengeAI-game/static/js/239.3e44191b.chunk.js.map",
     "977.bdb9de7a.chunk.js.map": "/ChallengeAI-game/static/js/977.bdb9de7a.chunk.js.map",
     "732.64c8f78a.chunk.js.map": "/ChallengeAI-game/static/js/732.64c8f78a.chunk.js.map",
@@ -37,6 +37,6 @@
   },
   "entrypoints": [
     "static/css/main.c6b02fef.css",
-    "static/js/main.bbb3c734.js"
+    "static/js/main.1569ac29.js"
   ]
 }
